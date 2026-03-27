@@ -8,8 +8,27 @@ function shuffle(array) {
 function PuzzleBoard({ image, onComplete }) {
   const [tiles, setTiles] = useState([]);
   const [dragged, setDragged] = useState(null);
+  const [tileSize, setTileSize] = useState(120);
 
-  // Initialize shuffled tiles
+  // 🔥 Responsive tile size
+  useEffect(() => {
+    const updateSize = () => {
+      if (window.innerWidth < 500) {
+        setTileSize(90); // Mobile
+      } else if (window.innerWidth < 900) {
+        setTileSize(120); // Tablet
+      } else {
+        setTileSize(180); // Desktop
+      }
+    };
+
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  // Shuffle tiles
   useEffect(() => {
     setTiles(shuffle([...Array(6).keys()]));
   }, [image]);
@@ -32,15 +51,16 @@ function PuzzleBoard({ image, onComplete }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(3, 180px)", // Bigger tiles
-        gap: "10px",
-        justifyContent: "center", // Center horizontally
-        margin: "20px auto", // Center and add vertical margin
-        padding: "20px",
-        border: "4px solid #ffcc00", // Fun border for kids
-        borderRadius: "20px",
-        backgroundColor: "#fff8dc", // Soft background
-        width: "max-content", // Only as wide as puzzle
+        gridTemplateColumns: `repeat(3, ${tileSize}px)`,
+        gap: "8px",
+        justifyContent: "center",
+        margin: "20px auto",
+        padding: "10px",
+        border: "3px solid #ffcc00",
+        borderRadius: "15px",
+        backgroundColor: "#fff8dc",
+        width: "fit-content",
+        maxWidth: "95vw", // 🔥 Prevent overflow
       }}
     >
       {tiles.map((pos, index) => (
@@ -51,7 +71,7 @@ function PuzzleBoard({ image, onComplete }) {
           image={image}
           onDrop={handleDrop}
           onDragStart={handleDragStart}
-          size={180} // Pass size to Tile
+          size={tileSize}
         />
       ))}
     </div>

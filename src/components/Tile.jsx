@@ -1,4 +1,4 @@
-function Tile({ index, image, position, onDrop, onDragStart, size = 120 }) {
+function Tile({ index, image, position, onDrop, onDragStart, size }) {
   return (
     <div
       draggable
@@ -15,8 +15,8 @@ function Tile({ index, image, position, onDrop, onDragStart, size = 120 }) {
         backgroundPosition: `${(position % 3) * 50}% ${Math.floor(position / 3) * 100}%`,
         backgroundRepeat: "no-repeat",
         cursor: "grab",
-        boxShadow: "2px 2px 10px rgba(0,0,0,0.3)",
-        transition: "transform 0.2s",
+        boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+        touchAction: "none", // 🔥 important for mobile
       }}
     />
   );

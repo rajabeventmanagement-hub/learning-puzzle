@@ -16,9 +16,36 @@ function App() {
   const current = levels[level];
 
   return (
-    <div style={{ textAlign: "center", marginTop: "40px" }}>
-      <h1>Level {current.letter}</h1>
-      <h2>{current.letter} for {current.word}</h2>
+    <div
+      style={{
+        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        padding: "10px",
+        backgroundColor: "#f0f8ff",
+      }}
+    >
+      <h1
+        style={{
+          fontSize: "clamp(24px, 5vw, 40px)", // 🔥 responsive text
+          color: "#ff6600",
+        }}
+      >
+        Level {current.letter}
+      </h1>
+
+      <h2
+        style={{
+          fontSize: "clamp(18px, 4vw, 28px)",
+          marginBottom: "15px",
+          color: "#0066cc",
+        }}
+      >
+        {current.letter} for {current.word}
+      </h2>
 
       <PuzzleBoard image={current.image} onComplete={nextLevel} />
     </div>
